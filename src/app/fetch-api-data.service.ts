@@ -103,9 +103,14 @@ export class UserRegistrationService {
     );
   }
 
-  getUser(userName: string): Observable<any> {
+  getUser(): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user;
+  }
+
+  updateUser(userDetails: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'users/' + userName, {
+    return this.http.put(apiUrl + 'users/' + userDetails.Username + userDetails, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
@@ -116,9 +121,10 @@ export class UserRegistrationService {
     );
   }
 
-  updateUser(userName: string, userDetails: any): Observable<any> {
+  deleteUser(): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
-    return this.http.put(apiUrl + 'users/' + userName + userDetails, {
+    return this.http.delete(apiUrl + 'users/' + user.Username, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
@@ -129,9 +135,10 @@ export class UserRegistrationService {
     );
   }
 
-  deleteUser(userName: string): Observable<any> {
+  getFavorites(): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
-    return this.http.delete(apiUrl + 'users/' + userName, {
+    return this.http.get(apiUrl + 'users/' + user.Username, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
@@ -142,9 +149,10 @@ export class UserRegistrationService {
     );
   }
 
-  addFavorites(userName: string, title: any): Observable<any> {
+  addFavorites(title: any): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
-    return this.http.post(apiUrl + 'users/' + userName + '/movies/' + title, {
+    return this.http.post(apiUrl + 'users/' + user.Username + '/movies/' + title._id, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
@@ -155,9 +163,10 @@ export class UserRegistrationService {
     );
   }
 
-  deleteFavorites(userName: string, title: any): Observable<any> {
+  deleteFavorites(title: any): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
-    return this.http.delete(apiUrl + 'users/' + userName + '/movies/' + title, {
+    return this.http.delete(apiUrl + 'users/' + user.Username + '/movies/' + title._id, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
