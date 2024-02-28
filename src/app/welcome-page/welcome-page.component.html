@@ -1,11 +1,15 @@
 <div class="main-page">
+  <div class="card" style="margin: auto; display: flex; flex-direction: column;">
     <h1>
-      Welcome to myFlix!
+      Welcome to Movie Mikes!
     </h1>
-    <button mat-raised-button (click)="openUserRegistrationDialog()" style="margin-right: 10px;" color="primary">
-      SignUp
-    </button>
-    <button mat-raised-button (click)="openUserLoginDialog()" color="primary">
-      Login
-    </button>
+    <div style="margin: auto;">
+      <button class="btn-primary" (click)="openUserRegistrationDialog()">
+        SignUp
+      </button>
+      <button class="btn-primary" (click)="openUserLoginDialog()">
+        Login
+      </button>
+    </div>
   </div>
+</div>

@@ -1,24 +1,30 @@
 <!-- src/app/movie-card/movie-card.component.html -->
 <div class="movie-page">
-    <div style="display: flex;">
-        <!-- Temp setup till I fix objectID ref -->
-        <button mat-raised-button color="primary" (click)="openProfile()">
+    <div style="display: flex; gap: 10px;">
+        <button class="btn-nav" (click)="openProfile()" style="margin: 5px 0px; height: 50px;">
             Profile
         </button>
-        <mat-card *ngFor="let movie of movies, let director of directors;, let genre of genres;" style="flex: 1 1 auto;">
-            <mat-card-header>
-                <mat-card-title>{{movie.Title}}</mat-card-title>
-                <mat-card-subtitle>Directed by: {{movie.Director}}</mat-card-subtitle>
-            </mat-card-header>
-            <img src={{movie.ImagePath}} alt={{movie.Title}} style="width: 250px;"/>
-            <mat-card-actions>
-                <button mat-button color="primary" (click)="openGenreDialog(genre.Name, genre.About)">
+        <button class="btn-warn" (click)="openProfile()" style="margin: 5px 0px; height: 50px;">
+            <mat-icon>logout</mat-icon>
+        </button>
+    </div>
+    <div class="order">
+        <mat-card *ngFor="let movie of movies, let director of directors;, let genre of genres;" class="card">
+            <img src={{movie.ImagePath}} alt={{movie.Title}}
+                style="width: 100%; border-radius: 5px 5px 0px 0px; box-shadow: 0 1px 15px 0 rgb(0, 0, 0);" />
+            <mat-card-content>
+                <h2>{{movie.Title}}</h2>
+                <p>Released on: {{movie.Released}}</p>
+            </mat-card-content>
+            <mat-card-actions style="margin-top: auto;">
+                <button class="btn" (click)="openGenreDialog(genre.Name, genre.About)">
                     Genre
                 </button>
-                <button mat-button color="primary" (click)="openDirectorDialog(director.Name, director.Bio, director.Born, director.Dead)">
+                <button class="btn"
+                    (click)="openDirectorDialog(director.Name, director.Bio, director.Born, director.Dead)">
                     Director
                 </button>
-                <button mat-button color="primary" (click)="openDescriptionDialog(movie.Description)">
+                <button class="btn-primary" (click)="openDescriptionDialog(movie.Description)">
                     Synopsis
                 </button>
                 <mat-icon>favorite_border</mat-icon>

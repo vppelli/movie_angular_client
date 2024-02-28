@@ -1,14 +1,13 @@
 <div class="profile-page">
-    <div style="display: flex;">
-        <mat-card>
+    <div class="order">
+        <mat-card class="card">
             <mat-card-header>
-                <mat-card-title>Welcome back {{userDetails.Username}}!</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                Favorites List
-            </mat-card-content>
-            <mat-card-header>
-                <mat-card-title>Update user Information!</mat-card-title>
+                <mat-card-title>
+                    <h1>Welcome back {{userDetails.Username}}!</h1>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <h2>Update your information?</h2>
+                </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <form>
@@ -31,12 +30,10 @@
                 </form>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-raised-button (click)="updateUser()" color="primary">
+                <button class="btn-primary" (click)="updateUser()">
                     Submit
                 </button>
-            </mat-card-actions>
-            <mat-card-actions>
-                <button mat-raised-button (click)="deleteUser()" color="primary">
+                <button class="btn-warn" (click)="deleteUser()">
                     Delete Account
                 </button>
             </mat-card-actions>
