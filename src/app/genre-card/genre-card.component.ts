@@ -14,6 +14,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrl: './genre-card.component.scss'
 })
 export class GenreCardComponent implements OnInit {
+
+  name: any = {};
+
   /**
   * This constructer contains data from the dialog data passed through.
   * @param data - Provides name and information about the genre.
@@ -29,5 +32,9 @@ export class GenreCardComponent implements OnInit {
 
   ngOnInit(): void {
     
+  }
+
+  Stringify(): void {
+    this.name = JSON.stringify(this.data.Name);
   }
 }

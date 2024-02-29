@@ -5,11 +5,15 @@ import { Component, OnInit } from '@angular/core';
 import { UserRegistrationService } from '../fetch-api-data.service'
 // This imports the Angular Material's MatDialog service
 import { MatDialog } from '@angular/material/dialog';
+// This import will display notifications back to the user
+import { MatSnackBar } from '@angular/material/snack-bar';
 // This imports the Components needed
 import { GenreCardComponent } from '../genre-card/genre-card.component';
 import { DirectorCardComponent } from '../director-card/director-card.component';
 import { DescriptionCardComponent } from '../description-card/description-card.component';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
+// This import is used to navigate among views
+import { Router } from '@angular/router';
 
 /**
 * This component is for the Movie page form where user can view movies on the app.
@@ -32,9 +36,13 @@ export class MovieCardComponent implements OnInit {
   * This constructer contains Api Data, DialogRef, Snackbar, Router
   * @param {MatDialog} dialog - Angular Material's MatDialog service for opening dialogs.
   * @param {UserRegistrationService} fetchApiData - Fetches API Data from '../fetch-api-data.service'.
+  * @param {MatSnackBar} snackBar - Angular Material's MatSnackBar service for displaying a message on a bar.
+  * @param {Router} router - Provides navigation among views and URL manipulation capabilities.
   */
   constructor(public fetchApiData: UserRegistrationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +82,7 @@ export class MovieCardComponent implements OnInit {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((response: any) => {
       this.movies = response;
+      console.log('List of Movies:', response);
       return this.movies;
     });
   }
@@ -88,12 +97,49 @@ export class MovieCardComponent implements OnInit {
     this.FavoriteMovies = this.user.FavoriteMovies;
   }
 
-  // addFavorite(): void {
+  /**
+  * This is the function responsible for adding User favorite to the backend.
+  * @module UserRegistrationService - holds the API Data
+  * @returns {MatSnackBar} - snackbar message saying "Movie was added to favorites" if Successful.
+  */
+  addFavorites(title: string): void {
+    if (this.isFavorite(title)) {
+      this.deleteFavorites(title);
+      console.log(title);
+    } else {
+      this.fetchApiData.addFavorites(title).subscribe(() => {
+        this.snackBar.open('Movie was added to favorites', 'OK', {
+          duration: 2000,
+        });
+        this.getFavorite();
+      });
+      console.log('Error', title);
+    }
+  }
 
-  // }
-  // deleteFavorite(): void {
+  /**
+  * This is the function responsible for deleting User favorite from the backend.
+  * @module UserRegistrationService - holds the API Data
+  * @returns {MatSnackBar} - snackbar message saying "Movie was removed from favorites" if Successful.
+  */
+  deleteFavorites(title: string): void {
+    this.fetchApiData.deleteFavorites(title).subscribe(() => {
+      this.snackBar.open('Movie was removed from favorites', 'OK', {
+        duration: 2000,
+      });
+      this.getFavorite();
+    });
+  }
 
-  // }
+  /**
+   * This is the function responsible for checking if the movie is a favorite movie.
+   * @param {any} movie  - Movie object to check.
+   * @returns {boolean} - Boolean indicating whether the movie is a favorite.
+   */
+  isFavorite(movie: string): boolean {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.FavoriteMovies.indexOf(movie) >= 0;
+  }
 
   /**
   * This component opens the Genre dialog.
@@ -149,6 +195,17 @@ export class MovieCardComponent implements OnInit {
   openProfile(): void {
     this.dialog.open(UserProfileComponent, {
       width: '1280px'
+    });
+  }
+
+  /**
+  * This component Logs you out.
+  * @returns {UserProfileComponent} - The components dialog
+  */
+  logOut(): void {
+    this.router.navigate(['welcome']); // Navigates to welcome page on success!
+    this.snackBar.open('Logged out', 'OK', {
+      duration: 2000
     });
   }
 }

@@ -41,7 +41,7 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getUser();
+    this.getTheUser();
     this.getFavorite();
   }
 
@@ -49,15 +49,17 @@ export class UserProfileComponent implements OnInit {
   * This is the function responsible for Getting User data from storage.
   * @returns {object} - all information about the user
   */
-  getUser(): void {
+  getTheUser(): void {
     this.user = this.fetchApiData.getUser();
     this.userDetails.Username = this.user.Username;
     this.userDetails.Email = this.user.Email;
     this.userDetails.Birthday = this.user.Birthday;
     this.userDetails.Password = this.user.Password;
-    this.fetchApiData.getAllMovies().subscribe((response) => {
-      this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
-    });
+    // Favorites List
+    
+    // this.fetchApiData.getAllMovies().subscribe((response) => {
+    //   this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.indexOf(movie._id) >= 0);
+    // });
   }
 
   /**
@@ -124,16 +126,13 @@ export class UserProfileComponent implements OnInit {
   * @module UserRegistrationService - holds the API Data
   * @returns {MatSnackBar} - snackbar message saying "Movie was removed from favorites" if Successful.
   */
-  deleteFavorites(title: any): void {
-    this.user = this.fetchApiData.getUser();
-    this.userDetails.Username = this.user.Username;
+  deleteFavorites(title: string): void {
     this.fetchApiData.deleteFavorites(title).subscribe((result) => {
       localStorage.setItem('user', JSON.stringify(result));
-      this.getFavorite();
-      this.getUser();
       this.snackBar.open('Movie was removed from favorites', 'OK', {
         duration: 2000,
       });
+      this.getFavorite();
     });
   }
 }
