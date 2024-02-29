@@ -34,7 +34,7 @@ export class GenreCardComponent implements OnInit {
     
   }
 
-  Stringify(): void {
-    this.name = JSON.stringify(this.data.Name);
-  }
+  // Stringify(): void {
+  //   this.name = JSON.stringify(this.data.Name);
+  // }
 }
