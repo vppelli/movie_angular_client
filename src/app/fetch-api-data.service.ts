@@ -213,10 +213,10 @@ export class UserRegistrationService {
   * @param {any} title - Provides the movie title ID
   * @returns {Observable<any>} - Observable for the API response of added user favorite
   */
-  addFavorites(title: string): Observable<any> {
+  addFavorites(title: any): Observable<any> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
-    return this.http.post(apiUrl + 'users/' + user.Username + '/movies/' + title, {
+    return this.http.post(apiUrl + 'users/' + user.Username + '/movies/' + title, {}, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,

@@ -1,0 +1,14 @@
+<div class="genre-page">
+    <div class="order">
+        <mat-card class="card" *ngFor="let genre of genres;">
+                <mat-card-header>
+                    <mat-card-title>
+                        <h1>{{genre.Name}}</h1>
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        <h2>About: {{genre.About}}</h2>
+                    </mat-card-subtitle>
+                </mat-card-header>
+        </mat-card>
+    </div>
+</div>

@@ -12,6 +12,8 @@ import { GenreCardComponent } from '../genre-card/genre-card.component';
 import { DirectorCardComponent } from '../director-card/director-card.component';
 import { DescriptionCardComponent } from '../description-card/description-card.component';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { GenrePageComponent } from '../genre-page/genre-page.component';
+import { DirectorPageComponent } from '../director-page/director-page.component';
 // This import is used to navigate among views
 import { Router } from '@angular/router';
 
@@ -102,7 +104,7 @@ export class MovieCardComponent implements OnInit {
   * @module UserRegistrationService - holds the API Data
   * @returns {MatSnackBar} - snackbar message saying "Movie was added to favorites" if Successful.
   */
-  addFavorites(title: string): void {
+  addFavorites(title: any): void {
     if (this.isFavorite(title)) {
       this.deleteFavorites(title);
       console.log(title);
@@ -122,7 +124,7 @@ export class MovieCardComponent implements OnInit {
   * @module UserRegistrationService - holds the API Data
   * @returns {MatSnackBar} - snackbar message saying "Movie was removed from favorites" if Successful.
   */
-  deleteFavorites(title: string): void {
+  deleteFavorites(title: any): void {
     this.fetchApiData.deleteFavorites(title).subscribe(() => {
       this.snackBar.open('Movie was removed from favorites', 'OK', {
         duration: 2000,
@@ -136,7 +138,7 @@ export class MovieCardComponent implements OnInit {
    * @param {any} movie  - Movie object to check.
    * @returns {boolean} - Boolean indicating whether the movie is a favorite.
    */
-  isFavorite(movie: string): boolean {
+  isFavorite(movie: any): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.FavoriteMovies.indexOf(movie) >= 0;
   }
@@ -194,6 +196,24 @@ export class MovieCardComponent implements OnInit {
   */
   openProfile(): void {
     this.dialog.open(UserProfileComponent, {
+      width: '1280px'
+    });
+  }
+  /**
+  * This component opens the Profile dialog.
+  * @returns {GenrePageComponent} - The components dialog
+  */
+  openGenres(): void {
+    this.dialog.open(GenrePageComponent, {
+      width: '1280px'
+    });
+  }
+  /**
+  * This component opens the Profile dialog.
+  * @returns {DirectorPageComponent} - The components dialog
+  */
+  openDirectors(): void {
+    this.dialog.open(DirectorPageComponent, {
       width: '1280px'
     });
   }

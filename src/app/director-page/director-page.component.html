@@ -1,0 +1,14 @@
+<div class="director-page">
+    <div class="order">
+        <mat-card class="card" *ngFor="let director of directors;">
+                <mat-card-header>
+                    <mat-card-title>
+                        <h1>{{director.Name}}</h1>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-actions>
+                    <button class="btn" (click)="openDirectorDialog(director.Name, director.Bio, director.Born, director.Death)">About</button>
+                </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

@@ -1,6 +1,12 @@
 <!-- src/app/movie-card/movie-card.component.html -->
 <div class="movie-page">
-    <div style="display: flex; gap: 10px;">
+    <div style="display: flex; gap: 10px; max-width: 2275px;">
+        <button class="btn-nav" (click)="openGenres()" style="margin: 5px 0px; height: 50px;">
+            Genres
+        </button>
+        <button class="btn-nav" (click)="openDirectors()" style="margin: 5px 0px; height: 50px;">
+            Directors
+        </button>
         <button class="btn-nav" (click)="openProfile()" style="margin: 5px 0px; height: 50px;">
             Profile
         </button>

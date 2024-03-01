@@ -28,6 +28,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { GenreCardComponent } from './genre-card/genre-card.component';
 import { DirectorCardComponent } from './director-card/director-card.component';
 import { DescriptionCardComponent } from './description-card/description-card.component';
+import { GenrePageComponent } from './genre-page/genre-page.component';
+import { DirectorPageComponent } from './director-page/director-page.component';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -49,7 +51,9 @@ const appRoutes: Routes = [
     UserProfileComponent,
     GenreCardComponent,
     DirectorCardComponent,
-    DescriptionCardComponent
+    DescriptionCardComponent,
+    GenrePageComponent,
+    DirectorPageComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
