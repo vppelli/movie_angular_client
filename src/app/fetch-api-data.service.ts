@@ -147,9 +147,9 @@ export class UserRegistrationService {
   /**
   * Making the call for user information endpoint
   * @constant user - Provides user information from localStorage
-  * @returns {Observable<any>} - Observable for the response of user
+  * @returns {any} - any for the response of user
   */
-  getUser(): Observable<any> {
+  getUser(): any {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user;
   }
@@ -160,7 +160,7 @@ export class UserRegistrationService {
   */
   updateUser(userDetails: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.put(apiUrl + 'users/' + userDetails.Username + userDetails, {
+    return this.http.put(apiUrl + 'users/' + userDetails.Username, userDetails, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
@@ -216,7 +216,8 @@ export class UserRegistrationService {
   addFavorites(title: any): Observable<any> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
-    return this.http.post(apiUrl + 'users/' + user.Username + '/movies/' + title, {}, {
+    localStorage.setItem('user', JSON.stringify(user));
+    return this.http.post(apiUrl + 'users/' + user.Username + '/movies/' + title, null, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
@@ -252,7 +253,7 @@ export class UserRegistrationService {
   * @returns {any} - Extracted response data.
   * @private
   */
-  private extractResponseData(res: any): any {
+  private extractResponseData(res: Object): any {
     const body = res;
     return body || {};
   }

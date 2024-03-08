@@ -34,6 +34,9 @@ import { DirectorPageComponent } from './director-page/director-page.component';
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'movies', component: MovieCardComponent },
+  { path: 'genres', component: GenrePageComponent},
+  { path: 'directors', component: DirectorPageComponent},
+  { path: 'profile', component: UserProfileComponent},
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
 

@@ -1,14 +1,39 @@
-<div class="director-page">
-    <div class="order">
-        <mat-card class="card" *ngFor="let director of directors;">
+<div class="page">
+    <div class="director-page">
+        <div class="order">
+            <h1 class="title">MOVIEMIKE'S</h1>
+        </div>
+        <div class="order" style="padding-left: 20px; padding-right: 20px; padding-bottom: 20px;">
+            <button class="btn-nav" (click)="openMovies()" style="margin: 5px 0px; height: 50px;">
+                Movies
+            </button>
+            <button class="btn-nav" (click)="openGenres()" style="margin: 5px 0px; height: 50px;">
+                Genres
+            </button>
+            <button class="btn-current" style="margin: 5px 0px; height: 50px;">
+                Directors
+            </button>
+            <button class="btn-nav" (click)="openProfile()" style="margin: 5px 0px; height: 50px;">
+                Profile
+            </button>
+            <button class="btn-warn" (click)="logOut()" style="margin: 5px 0px; height: 50px;">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </div>
+        <div class="order">
+            <mat-card class="card" *ngFor="let director of directors;">
                 <mat-card-header>
                     <mat-card-title>
-                        <h1>{{director.Name}}</h1>
+                        <h1>{{director.Name}} <span class="small">( {{director.Dead}} )</span></h1>
                     </mat-card-title>
+                    <mat-card-subtitle>
+                        <h2>Born: {{director.Born}}</h2>
+                    </mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-actions>
-                    <button class="btn" (click)="openDirectorDialog(director.Name, director.Bio, director.Born, director.Death)">About</button>
-                </mat-card-actions>
-        </mat-card>
+                <mat-card-content>
+                    <h2>{{director.Bio}}</h2>
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
 </div>
