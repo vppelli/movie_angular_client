@@ -55,21 +55,6 @@ export class DirectorPageComponent implements OnInit {
   }
 
   /**
-  * This component opens the Director dialog.
-  * @param {string} Name - Name of the Director
-  * @param {string} Bio - Information about the Director
-  * @param {number} Born - Birthday Date
-  * @param {string} Dead - Provides information if Dead
-  * @returns {DirectorCardComponent} - The components dialog
-  */
-  openDirectorDialog(Director: any[]): void {
-    this.dialog.open(DirectorCardComponent, {
-      data: Director,
-      width: '1280px'
-    });
-  }
-
-  /**
   * This component opens the Profile page.
   * @returns {UserProfileComponent} - The components page
   */
