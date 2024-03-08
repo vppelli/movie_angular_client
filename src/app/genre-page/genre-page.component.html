@@ -1,6 +1,27 @@
-<div class="genre-page">
-    <div class="order">
-        <mat-card class="card" *ngFor="let genre of genres;">
+<div class="page">
+    <div class="genre-page">
+        <div class="order">
+            <h1 class="title">MOVIEMIKE'S</h1>
+        </div>
+        <div class="order" style="padding-left: 20px; padding-right: 20px; padding-bottom: 20px;">
+            <button class="btn-nav" (click)="openMovies()" style="margin: 5px 0px; height: 50px;">
+                Movies
+            </button>
+            <button class="btn-current" style="margin: 5px 0px; height: 50px;">
+                Genres
+            </button>
+            <button class="btn-nav" (click)="openDirectors()" style="margin: 5px 0px; height: 50px;">
+                Directors
+            </button>
+            <button class="btn-nav" (click)="openProfile()" style="margin: 5px 0px; height: 50px;">
+                Profile
+            </button>
+            <button class="btn-warn" (click)="logOut()" style="margin: 5px 0px; height: 50px;">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </div>
+        <div class="order" style="margin-bottom: 100px;">
+            <mat-card class="card" *ngFor="let genre of genres;">
                 <mat-card-header>
                     <mat-card-title>
                         <h1>{{genre.Name}}</h1>
@@ -9,6 +30,7 @@
                         <h2>About: {{genre.About}}</h2>
                     </mat-card-subtitle>
                 </mat-card-header>
-        </mat-card>
+            </mat-card>
+        </div>
     </div>
 </div>

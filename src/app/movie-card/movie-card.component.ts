@@ -16,6 +16,7 @@ import { GenrePageComponent } from '../genre-page/genre-page.component';
 import { DirectorPageComponent } from '../director-page/director-page.component';
 // This import is used to navigate among views
 import { Router } from '@angular/router';
+import { WelcomePageComponent } from '../welcome-page/welcome-page.component';
 
 /**
 * This component is for the Movie page form where user can view movies on the app.
@@ -30,8 +31,6 @@ export class MovieCardComponent implements OnInit {
 
   user: any = {};
   movies: any[] = [];
-  genres: any = [];
-  directors: any = [];
   FavoriteMovies: any[] = [];
 
   /**
@@ -53,30 +52,6 @@ export class MovieCardComponent implements OnInit {
   }
 
   /**
-  * This is the function responsible for getting the genre list from the backend.
-  * @module UserRegistrationService - holds the API Data
-  * @returns {any} - List of genres from the API.
-  */
-  getGenres(): void {
-    this.fetchApiData.getAllGenres().subscribe((response: any) => {
-      this.genres = response;
-      return this.genres;
-    });
-  }
-
-  /**
-  * This is the function responsible for getting the director list from the backend.
-  * @module UserRegistrationService - holds the API Data
-  * @returns {any} - List of directors from the API.
-  */
-  getDirectors(): void {
-    this.fetchApiData.getAllDirectors().subscribe((response: any) => {
-      this.directors = response;
-      return this.directors;
-    });
-  }
-
-  /**
   * This is the function responsible for getting movie list from the backend.
   * @module UserRegistrationService - holds the API Data
   * @returns {any} - List of movies from the API
@@ -84,7 +59,6 @@ export class MovieCardComponent implements OnInit {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((response: any) => {
       this.movies = response;
-      console.log('List of Movies:', response);
       return this.movies;
     });
   }
@@ -102,6 +76,7 @@ export class MovieCardComponent implements OnInit {
   /**
   * This is the function responsible for adding User favorite to the backend.
   * @module UserRegistrationService - holds the API Data
+  * @param {any} title  - Movie ID.
   * @returns {MatSnackBar} - snackbar message saying "Movie was added to favorites" if Successful.
   */
   addFavorites(title: any): void {
@@ -109,10 +84,11 @@ export class MovieCardComponent implements OnInit {
       this.deleteFavorites(title);
       console.log(title);
     } else {
-      this.fetchApiData.addFavorites(title).subscribe(() => {
+      this.fetchApiData.addFavorites(title).subscribe((response) => {
         this.snackBar.open('Movie was added to favorites', 'OK', {
           duration: 2000,
         });
+        localStorage.setItem('user', JSON.stringify(response));
         this.getFavorite();
       });
       console.log('Error', title);
@@ -122,13 +98,15 @@ export class MovieCardComponent implements OnInit {
   /**
   * This is the function responsible for deleting User favorite from the backend.
   * @module UserRegistrationService - holds the API Data
+  * @param {any} title  - Movie ID.
   * @returns {MatSnackBar} - snackbar message saying "Movie was removed from favorites" if Successful.
   */
   deleteFavorites(title: any): void {
-    this.fetchApiData.deleteFavorites(title).subscribe(() => {
+    this.fetchApiData.deleteFavorites(title).subscribe((response) => {
       this.snackBar.open('Movie was removed from favorites', 'OK', {
         duration: 2000,
       });
+      localStorage.setItem('user', JSON.stringify(response));
       this.getFavorite();
     });
   }
@@ -145,35 +123,23 @@ export class MovieCardComponent implements OnInit {
 
   /**
   * This component opens the Genre dialog.
-  * @param {string} Name - Name of the Genre
-  * @param {string} About - Information about the Genre
+  * @param {any} Genres - Information about the Genre
   * @returns {GenreCardComponent} - The components dialog
   */
-  openGenreDialog(Name: string, About: string): void {
+  openGenreDialog(Genres: any[]): void {
     this.dialog.open(GenreCardComponent, {
-      data: {
-        Name: Name,
-        About: About
-      },
+      data: Genres,
       width: '580px'
     });
   }
   /**
   * This component opens the Director dialog.
-  * @param {string} Name - Name of the Director
-  * @param {string} Bio - Information about the Director
-  * @param {number} Born - Birthday Date
-  * @param {string} Dead - Provides information if Dead
+  * @param {any} Director - Information about the Director
   * @returns {DirectorCardComponent} - The components dialog
   */
-  openDirectorDialog(Name: string, Bio: string, Born: number, Dead: string): void {
+  openDirectorDialog(Director: any[]): void {
     this.dialog.open(DirectorCardComponent, {
-      data: {
-        Name: Name,
-        Bio: Bio,
-        Born: Born,
-        Dead: Dead
-      },
+      data: Director,
       width: '580px'
     });
   }
@@ -191,39 +157,44 @@ export class MovieCardComponent implements OnInit {
     });
   }
   /**
-  * This component opens the Profile dialog.
-  * @returns {UserProfileComponent} - The components dialog
+  * This component opens the Profile page.
+  * @returns {UserProfileComponent} - The components page
   */
   openProfile(): void {
-    this.dialog.open(UserProfileComponent, {
-      width: '1280px'
+    this.router.navigate(['profile']); // Navigates to profile page on success!
+    this.snackBar.open('Profile Page', 'OK', {
+      duration: 2000
     });
   }
   /**
-  * This component opens the Profile dialog.
-  * @returns {GenrePageComponent} - The components dialog
+  * This component opens the Genre page.
+  * @returns {GenrePageComponent} - The components page
   */
   openGenres(): void {
-    this.dialog.open(GenrePageComponent, {
-      width: '1280px'
+    this.router.navigate(['genres']); // Navigates to genre page on success!
+    this.snackBar.open('Genres Page', 'OK', {
+      duration: 2000
     });
   }
   /**
-  * This component opens the Profile dialog.
-  * @returns {DirectorPageComponent} - The components dialog
+  * This component opens the Director page.
+  * @returns {DirectorPageComponent} - The components page
   */
   openDirectors(): void {
-    this.dialog.open(DirectorPageComponent, {
-      width: '1280px'
+    this.router.navigate(['directors']); // Navigates to director page on success!
+    this.snackBar.open('Directors Page', 'OK', {
+      duration: 2000
     });
   }
 
   /**
   * This component Logs you out.
-  * @returns {UserProfileComponent} - The components dialog
+  * @returns {WelcomePageComponent} - The components page
   */
   logOut(): void {
     this.router.navigate(['welcome']); // Navigates to welcome page on success!
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     this.snackBar.open('Logged out', 'OK', {
       duration: 2000
     });

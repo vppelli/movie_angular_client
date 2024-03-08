@@ -23,7 +23,7 @@ export class UserProfileComponent implements OnInit {
   * @type {object} - holds {Username, Password, Email, Birthday, FavoriteMovies}
   * @property {input} - input property for the form
   */
-  @Input() userDetails: any = { Username: '', Password: '', Email: '', Birthday: '', FavoriteMovies: [] };
+  @Input() userDetails: any = { Username: '', Password: '', Email: '', Birthday: '' };
 
   user: any = {};
   movies: any[] = [];
@@ -50,16 +50,15 @@ export class UserProfileComponent implements OnInit {
   * @returns {object} - all information about the user
   */
   getTheUser(): void {
-    this.user = this.fetchApiData.getUser();
-    this.userDetails.Username = this.user.Username;
-    this.userDetails.Email = this.user.Email;
-    this.userDetails.Birthday = this.user.Birthday;
-    this.userDetails.Password = this.user.Password;
-    // Favorites List
-    
-    // this.fetchApiData.getAllMovies().subscribe((response) => {
-    //   this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.indexOf(movie._id) >= 0);
-    // });
+    const user = this.fetchApiData.getUser();
+    this.fetchApiData.getAllMovies().subscribe((movies: any) => {
+      this.FavoriteMovies = movies.filter((movie: any) => user.FavoriteMovies.includes(movie._id));
+    });
+    this.userDetails.Username = user.Username;
+    this.userDetails.Email = user.Email;
+    this.userDetails.Birthday = user.Birthday;
+    this.userDetails.Password = user.Password;
+    this.user = user
   }
 
   /**
@@ -133,6 +132,50 @@ export class UserProfileComponent implements OnInit {
         duration: 2000,
       });
       this.getFavorite();
+    });
+  }
+
+  /**
+  * This component opens the Movie page.
+  * @returns {MovieCardComponent} - The components page
+  */
+  openMovies(): void {
+    this.router.navigate(['movies']); // Navigates to movie page on success!
+    this.snackBar.open('Movies Page', 'OK', {
+      duration: 2000
+    });
+  }
+  /**
+  * This component opens the Genre page.
+  * @returns {GenrePageComponent} - The components page
+  */
+  openGenres(): void {
+    this.router.navigate(['genres']); // Navigates to genre page on success!
+    this.snackBar.open('Genres Page', 'OK', {
+      duration: 2000
+    });
+  }
+  /**
+  * This component opens the Director page.
+  * @returns {DirectorPageComponent} - The components page
+  */
+  openDirectors(): void {
+    this.router.navigate(['directors']); // Navigates to director page on success!
+    this.snackBar.open('Directors Page', 'OK', {
+      duration: 2000
+    });
+  }
+
+  /**
+  * This component Logs you out.
+  * @returns {WelcomePageComponent} - The components page
+  */
+  logOut(): void {
+    this.router.navigate(['welcome']); // Navigates to welcome page on success!
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.snackBar.open('Logged out', 'OK', {
+      duration: 2000
     });
   }
 }

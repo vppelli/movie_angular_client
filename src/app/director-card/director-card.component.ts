@@ -26,7 +26,7 @@ export class DirectorCardComponent implements OnInit {
       Bio: string,
       Born: number,
       Dead: string
-    }
+    }[]
   ) { }
 
   ngOnInit(): void {

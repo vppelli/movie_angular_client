@@ -7,6 +7,10 @@ import { UserRegistrationService } from '../fetch-api-data.service';
 import { MatDialog } from '@angular/material/dialog';
 // This imports the Components needed
 import { DirectorCardComponent } from '../director-card/director-card.component';
+// This import is used to display notifications back to the user
+import { MatSnackBar } from '@angular/material/snack-bar';
+// This import is used to navigate among views
+import { Router } from '@angular/router';
 
 /**
 * This component is for the Users Profile.
@@ -24,9 +28,15 @@ export class DirectorPageComponent implements OnInit {
   /**
   * This constructer contains Api Data.
   * @param {UserRegistrationService} fetchApiData - Fetches API Data from '../fetch-api-data.service'.
+  * @param {MatSnackBar} snackBar - Angular Material's MatSnackBar service for displaying a message on a bar.
+  * @param {Router} router - Provides navigation among views and URL manipulation capabilities.
+  * @param {MatDialog} dialog - Angular Material's MatDialog service for opening dialogs.
   */
   constructor(public fetchApiData: UserRegistrationService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+    public router: Router
+    ) { }
 
   ngOnInit(): void {
     this.getDirectors();
@@ -52,15 +62,54 @@ export class DirectorPageComponent implements OnInit {
   * @param {string} Dead - Provides information if Dead
   * @returns {DirectorCardComponent} - The components dialog
   */
-  openDirectorDialog(Name: string, Bio: string, Born: number, Dead: string): void {
+  openDirectorDialog(Director: any[]): void {
     this.dialog.open(DirectorCardComponent, {
-      data: {
-        Name: Name,
-        Bio: Bio,
-        Born: Born,
-        Dead: Dead
-      },
+      data: Director,
       width: '1280px'
+    });
+  }
+
+  /**
+  * This component opens the Profile page.
+  * @returns {UserProfileComponent} - The components page
+  */
+  openProfile(): void {
+    this.router.navigate(['profile']); // Navigates to profile page on success!
+    this.snackBar.open('Profile Page', 'OK', {
+      duration: 2000
+    });
+  }
+  /**
+  * This component opens the Genre page.
+  * @returns {GenrePageComponent} - The components page
+  */
+  openGenres(): void {
+    this.router.navigate(['genres']); // Navigates to genre page on success!
+    this.snackBar.open('Genres Page', 'OK', {
+      duration: 2000
+    });
+  }
+  /**
+  * This component opens the Movie page.
+  * @returns {MovieCardComponent} - The components page
+  */
+  openMovies(): void {
+    this.router.navigate(['movies']); // Navigates to movies page on success!
+    this.snackBar.open('Directors Page', 'OK', {
+      duration: 2000
+    });
+  }
+
+  /**
+  * This component Logs you out.
+  * @returns {WelcomePageComponent} - The components page
+  */
+  logOut(): void {
+    this.router.navigate(['welcome']); // Navigates to welcome page on success!
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.snackBar.open('Logged out', 'OK', {
+      duration: 2000
     });
   }
 }
