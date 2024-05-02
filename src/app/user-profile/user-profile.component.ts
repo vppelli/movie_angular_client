@@ -131,6 +131,7 @@ export class UserProfileComponent implements OnInit {
       this.snackBar.open('Movie was removed from favorites', 'OK', {
         duration: 2000,
       });
+      this.getTheUser();
       this.getFavorite();
     });
   }
